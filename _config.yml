@@ -1,8 +1,8 @@
 title: DRUM SUPPS 開発チームブログ
 description: DRUM SUPPS 開発チームが、リリースや障害対応などサービスの裏側をお伝えするブログ。
 lang: ja
-url: https://blog.drumsupps.example
-baseurl: ""
+url: https://fratino.github.io
+baseurl: "/SUPPS-blog"
 
 markdown: kramdown
 kramdown:
