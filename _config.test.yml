@@ -1,0 +1,7 @@
+# テスト用のオーバーレイ。`_config.yml,_config.test.yml` の順で読ませる。
+#
+# 本番は sass compressed だが、圧縮 CSS に正規表現を当てるのは脆い
+# （空白やゼロ詰めの差で落ちる）。テストは展開済み CSS に対してアサートする。
+# 本番構成そのものは tests/acceptance/build.test.mjs が別途 _site を見て検証する。
+sass:
+  style: expanded

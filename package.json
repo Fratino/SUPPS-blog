@@ -1,0 +1,18 @@
+{
+  "name": "supps-blog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "DRUM SUPPS Blog — Jekyll site verified against specs/SPEC.md",
+  "scripts": {
+    "build": "bin/jekyll build",
+    "build:test": "bin/jekyll build --config _config.yml,_config.test.yml --destination _site-test",
+    "pretest": "npm run build && npm run build:test",
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "test:only": "node --test \"tests/**/*.test.mjs\"",
+    "serve": "bin/jekyll serve --host 0.0.0.0 --livereload"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.5"
+  }
+}

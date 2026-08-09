@@ -1,0 +1,14 @@
+---
+layout: default
+pagination:
+  enabled: true
+---
+<div class="wrap page-body">
+  <div class="post-grid">
+    {%- for post in paginator.posts %}
+      {%- include post-card.html post=post -%}
+    {%- endfor %}
+  </div>
+
+  {%- include pagination.html -%}
+</div>

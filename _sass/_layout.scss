@@ -1,0 +1,70 @@
+// DESIGN.md §4 — レイアウト。
+// ブレークポイントは 768px の唯一の分岐点。ここを増やすと本体アプリとズレる。
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.wrap--prose {
+  max-width: 760px;
+}
+
+// フッターを常にビューポート下端に置く（コンテンツが短いページで不自然に浮かないように）。
+// header は position: fixed でフローに参加しないので、この flex 計算には影響しない。
+body {
+  padding-top: 92px; // お知らせバナー 40px + 固定ヘッダー 52px 分
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#main {
+  flex: 1 0 auto;
+}
+
+.site-footer {
+  flex: none;
+}
+
+// ページ本体の上下余白（DESIGN.md §4「記事の上下パディング 48px 24px」に合わせる）
+.page-body {
+  padding-top: 48px;
+  padding-bottom: 80px;
+}
+
+// セクション間マージン
+.section + .section {
+  margin-top: 36px;
+}
+
+.page-title {
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.page-lead {
+  font-family: 'Noto Serif JP', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+
+@media (max-width: 768px) {
+  .wrap {
+    padding: 0 20px;
+  }
+
+  // 画面が狭いほどヘッダー・フッターと本文の間が詰まって見えるので、
+  // 上下の余白はデスクトップよりむしろ広めに取る。
+  .page-body {
+    padding-top: 64px;
+    padding-bottom: 96px;
+  }
+}

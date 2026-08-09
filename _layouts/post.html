@@ -1,0 +1,37 @@
+---
+layout: default
+---
+<article class="wrap wrap--prose page-body">
+  <header class="post-header">
+    {%- if page.category %}
+    <div class="post-header__eyebrow">{{ page.category }}</div>
+    {%- endif %}
+    <h1 class="post-header__title">{{ page.title }}</h1>
+    <div class="post-header__meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y.%m.%d" }}</time>
+    </div>
+  </header>
+
+  <div class="prose animate-fade-up">
+    {{ content }}
+  </div>
+
+  <nav class="post-nav" aria-label="前後の記事">
+    {%- if page.previous %}
+    <a class="btn btn--accent" href="{{ page.previous.url | relative_url }}">
+      <span class="material-symbols-outlined icon-sm" aria-hidden="true">arrow_back</span>
+      {{ page.previous.title | truncate: 24 }}
+    </a>
+    {%- else %}
+    <span></span>
+    {%- endif %}
+    {%- if page.next %}
+    <a class="btn btn--accent" href="{{ page.next.url | relative_url }}">
+      {{ page.next.title | truncate: 24 }}
+      <span class="material-symbols-outlined icon-sm" aria-hidden="true">arrow_forward</span>
+    </a>
+    {%- else %}
+    <span></span>
+    {%- endif %}
+  </nav>
+</article>

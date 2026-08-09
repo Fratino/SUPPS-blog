@@ -1,0 +1,15 @@
+---
+layout: default
+---
+<div class="wrap wrap--prose page-body">
+  {%- if page.title %}
+  <h1 class="page-title">{{ page.title }}</h1>
+  {%- endif %}
+  {%- if page.lead %}
+  <p class="page-lead">{{ page.lead }}</p>
+  {%- endif %}
+
+  <div class="prose animate-fade-up">
+    {{ content }}
+  </div>
+</div>

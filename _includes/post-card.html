@@ -1,0 +1,23 @@
+{%- comment -%}
+  DESIGN.md §5.2。
+  引数: include.post
+  thumbnail が無い記事ではサムネイル領域ごと出力しない（空の 16:9 が空くのを避ける）。
+{%- endcomment -%}
+{%- assign post = include.post -%}
+<a class="post-card" href="{{ post.url | relative_url }}">
+  {%- if post.thumbnail %}
+  <div class="post-card__thumb">
+    <img src="{{ post.thumbnail | relative_url }}" alt="" loading="lazy" width="1280" height="720">
+  </div>
+  {%- endif %}
+  <div class="post-card__body">
+    {%- if post.category %}
+    <div class="post-card__eyebrow">{{ post.category }}</div>
+    {%- endif %}
+    <h2 class="post-card__title">{{ post.title }}</h2>
+    <p class="post-card__excerpt">{{ post.excerpt | strip_html | normalize_whitespace | strip }}</p>
+    <div class="post-card__meta">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y.%m.%d" }}</time>
+    </div>
+  </div>
+</a>

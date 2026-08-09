@@ -1,0 +1,232 @@
+// DESIGN.md §6 — 記事本文。
+// Jekyll の Markdown 出力にはクラスが付かないので、.prose の子孫セレクタで当てる。
+
+.prose {
+  font-family: 'Noto Serif JP', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.9;
+  letter-spacing: .01em;
+  color: var(--text-muted);
+
+  // ── 見出しはサンセリフに戻す ──
+  h2, h3, h4 {
+    font-family: Manrope, 'Noto Sans JP', sans-serif;
+    color: var(--text);
+  }
+
+  // 字送りは §3.3 の表に従う。h2/h3 は -0.01em、h4 は 0。
+  // （§6 のコードブロックは 3 つまとめて -.01em にしているが、表のほうを採った）
+  h2, h3 { letter-spacing: -.01em; }
+  h4     { letter-spacing: 0; }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.4;
+    margin: 56px 0 16px;
+    padding-top: 24px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 36px 0 12px;
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5; // 指定しないと .prose の 1.9 を継いで本文と同じ行送りになる
+    margin: 28px 0 10px;
+  }
+
+  p { margin: 0 0 24px; }
+
+  // 太字は本文の明朝から浮かせて視認性を上げる（見出しと同じサンセリフ）。
+  strong {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  em {
+    font-style: normal; // 日本語に斜体は使わない
+    color: var(--text);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(var(--accent-rgb), .35);
+    transition: color 150ms ease, border-color 150ms ease;
+
+    &:hover {
+      color: var(--accent-dim);
+      border-bottom-color: var(--accent-dim);
+    }
+  }
+
+  ul, ol {
+    margin: 0 0 24px;
+    padding-left: 1.4em;
+  }
+
+  li { margin-bottom: 8px; }
+  li::marker { color: var(--text-faint); }
+
+  blockquote {
+    margin: 28px 0;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    font-size: 15px;
+    line-height: 1.85; // §3.3「引用」。これが無いと本文の 1.9 を継ぐ
+
+    p:last-child { margin-bottom: 0; }
+  }
+
+  hr {
+    border: none;
+    border-top: 0.5px solid var(--divider);
+    margin: 48px 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 32px auto;
+  }
+
+  figcaption {
+    font-family: Manrope, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-faint);
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  // ── code ──
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .875em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  pre {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    margin: 0 0 24px;
+    font-size: 13px;
+    line-height: 1.7;
+
+    code {
+      padding: 0;
+      border: none;
+      background: none;
+      font-size: inherit;
+    }
+  }
+
+  // rouge は .highlight > pre の構造で出す。外側の余白は pre 側に任せる。
+  .highlight {
+    margin: 0 0 24px;
+
+    pre { margin: 0; }
+  }
+
+  // ── table ──
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 24px;
+    font-family: Manrope, 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    border-bottom: 0.5px solid var(--border);
+    text-align: left;
+  }
+
+  th {
+    background: var(--bg-card);
+    font-weight: 700;
+    color: var(--text);
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  td { color: var(--text-muted); }
+}
+
+// ── 記事ヘッダー ──
+
+.post-header {
+  margin-bottom: 48px;
+
+  &__eyebrow {
+    font-family: Manrope, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    font-family: Manrope, 'Noto Sans JP', sans-serif;
+    font-size: clamp(28px, 5vw, 40px);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin: 0 0 12px;
+  }
+
+  &__meta {
+    font-family: Manrope, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: .04em;
+    color: var(--text-faint);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+// 記事下部の前後リンク
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--border);
+}

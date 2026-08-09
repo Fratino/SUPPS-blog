@@ -1,0 +1,16 @@
+---
+# front matter が無いと Jekyll が SCSS として処理しない（空でよい）
+---
+
+// DESIGN.md §10 の読み込み順。
+// `@import` ではなく `@use` を使う（Dart Sass で @import が非推奨のため）。
+// 各パーシャルは互いに依存しないので、この順序はそのまま出力順を意味する。
+@use "tokens";
+@use "base";
+@use "layout";
+@use "banner";
+@use "header";
+@use "components";
+@use "prose";
+@use "motion";
+@use "icons";

@@ -1,0 +1,9 @@
+{%- comment -%} DESIGN.md §5.5。 {%- endcomment -%}
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span class="site-footer__copy">&copy; {{ site.time | date: "%Y" }} {{ site.title }}</span>
+    <nav class="site-footer__nav" aria-label="フッターナビゲーション">
+      <a class="site-footer__link" href="{{ '/archive/' | relative_url }}">アーカイブ</a>
+    </nav>
+  </div>
+</footer>

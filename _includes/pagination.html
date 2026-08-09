@@ -1,0 +1,27 @@
+{%- comment -%}
+  jekyll-paginate-v2 の paginator を使う。
+  端では前後リンクを出さない（rel と class の両方を持たせてある）。
+{%- endcomment -%}
+{%- if paginator.total_pages > 1 %}
+<nav class="pagination" aria-label="ページ送り">
+  {%- if paginator.previous_page_path %}
+  <a class="btn btn--accent pagination__prev" rel="prev" href="{{ paginator.previous_page_path | relative_url }}">
+    <span class="material-symbols-outlined icon-sm" aria-hidden="true">arrow_back</span>
+    前のページ
+  </a>
+  {%- else %}
+  <span></span>
+  {%- endif %}
+
+  <span class="pagination__status">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+
+  {%- if paginator.next_page_path %}
+  <a class="btn btn--accent pagination__next" rel="next" href="{{ paginator.next_page_path | relative_url }}">
+    次のページ
+    <span class="material-symbols-outlined icon-sm" aria-hidden="true">arrow_forward</span>
+  </a>
+  {%- else %}
+  <span></span>
+  {%- endif %}
+</nav>
+{%- endif -%}

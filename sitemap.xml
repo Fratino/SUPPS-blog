@@ -1,0 +1,32 @@
+---
+permalink: /sitemap.xml
+layout: none
+sitemap: false
+---
+{%- comment -%}
+  jekyll-sitemap を使わず自前で出している。
+  jekyll-paginate-v2 がトップの Page オブジェクトを差し替えるため、
+  jekyll-sitemap が参照する site.html_pages からトップが消え、
+  サイトの正規 URL が sitemap に一切載らない状態になっていた。
+
+  ページ送りの 2 ページ目以降は意図的に載せない（同じ記事の重複提示になるため）。
+{%- endcomment -%}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ '/' | absolute_url }}</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+  </url>
+  {%- for post in site.posts %}
+  <url>
+    <loc>{{ post.url | absolute_url }}</loc>
+    <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+  </url>
+  {%- endfor %}
+  {%- for p in site.html_pages %}
+    {%- if p.sitemap == false or p.url == '/' %}{% continue %}{% endif %}
+  <url>
+    <loc>{{ p.url | absolute_url }}</loc>
+  </url>
+  {%- endfor %}
+</urlset>

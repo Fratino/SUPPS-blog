@@ -1,0 +1,61 @@
+title: DRUM SUPPS 開発チームブログ
+description: DRUM SUPPS 開発チームが、リリースや障害対応などサービスの裏側をお伝えするブログ。
+lang: ja
+url: https://blog.drumsupps.example
+baseurl: ""
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    # 色は _sass 側のトークンで当てる。rouge のテーマ CSS は読み込まない
+    # （ハードコードされた色が大量に入り、DESIGN.md §11 の「色は必ず var(--token)」に反するため）。
+    css_class: highlight
+
+sass:
+  style: compressed
+  sass_dir: _sass
+  # 既定では main.css.map が公開物に出て、_sass のソースがそのまま外から読める。
+  sourcemap: never
+
+permalink: /posts/:title/
+
+plugins:
+  - jekyll-paginate-v2
+
+# ── 一覧のページネーション（jekyll-paginate-v2） ──
+pagination:
+  enabled: true
+  per_page: 12
+  permalink: "/page/:num/"
+  sort_field: "date"
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
+
+# defaults は _posts だけに当てる。
+# `scope: {path: ""}` の catch-all は assets/js/*.js のような front matter 付きの
+# 資産ファイルまで巻き込み、JS が HTML ページに包まれて出力される。
+# ページ側は各ファイルが layout を明示する（index.html / archive.html / 404.html）。
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - bin          # コンテナ実行用のラッパー。公開物ではない
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - package.json
+  - package-lock.json
+  - tests
+  - specs
+  - reports
+  - docs
+  - DESIGN.md
+  - README.md

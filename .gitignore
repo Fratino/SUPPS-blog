@@ -1,0 +1,12 @@
+_site/
+_site-test/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+vendor/
+node_modules/
+.bundle/
+.cache/
+.local/
+
+# Gemfile.lock はコミットする（bundler-audit の検査対象であり、ビルドの再現性の要）

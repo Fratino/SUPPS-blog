@@ -1,0 +1,28 @@
+{%- comment -%} DESIGN.md §5.1。スクロールしても影は付けない。 {%- endcomment -%}
+<header class="site-header">
+  <a class="site-header__brand" href="{{ '/' | relative_url }}">
+    <img class="site-logo" src="{{ '/assets/img/logo-text.svg' | relative_url }}" alt="{{ site.title }}" width="133" height="18">
+  </a>
+
+  <nav class="site-nav" aria-label="メインナビゲーション">
+    {%- comment -%}
+      page.url は "/" のこともあれば "/index.html" のこともあり、
+      ページネーション 2 ページ目以降は "/page/2/" になる。
+      HOME はロゴが担うので、ナビにはアーカイブだけを置く。
+    {%- endcomment -%}
+    {%- assign cur = page.url | replace: "index.html", "" -%}
+    {%- assign path = "/archive/" -%}
+    {%- if cur contains path -%}
+      {%- assign is_active = true -%}
+    {%- else -%}
+      {%- assign is_active = false -%}
+    {%- endif -%}
+    <a class="nav-link{% if is_active %} active{% endif %}"
+       href="{{ path | relative_url }}"{% if is_active %} aria-current="page"{% endif %}>アーカイブ</a>
+
+    <button class="theme-toggle" type="button" aria-label="テーマを切り替える">
+      <span class="material-symbols-outlined icon-sm theme-toggle__icon--light" aria-hidden="true">light_mode</span>
+      <span class="material-symbols-outlined icon-sm theme-toggle__icon--dark" aria-hidden="true">dark_mode</span>
+    </button>
+  </nav>
+</header>

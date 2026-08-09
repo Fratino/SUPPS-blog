@@ -1,0 +1,105 @@
+// DESIGN.md §5.1 — 固定ヘッダー。
+// スクロールしても影は付けない（本体の .navBar.scrolled { box-shadow: none } に合わせる）。
+
+.site-header {
+  position: fixed;
+  top: 40px; // お知らせバナー（.site-banner）の高さ分だけ下げる
+  left: 0;
+  right: 0;
+  z-index: 10001;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(7,7,7,0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+
+[data-theme="light"] .site-header {
+  background: rgba(240,242,245,0.7);
+}
+
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+// ロゴ SVG の内部色を一度潰してから、テーマに合わせて反転させる
+.site-logo {
+  height: 18px;
+  width: auto;
+  display: block;
+}
+
+[data-theme="dark"] .site-logo  { filter: brightness(0) invert(1); }
+[data-theme="light"] .site-logo { filter: brightness(0); }
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 6px 14px;
+  // Dart Sass は `13px/1` をスラッシュ除算として警告するため、shorthand は使わない
+  font-family: Manrope, 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: color 150ms ease, background 150ms ease;
+
+  &:hover {
+    color: var(--text);
+    background: rgba(128,128,128,0.08);
+  }
+
+  &.active {
+    color: var(--accent);
+    font-weight: 700;
+  }
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 4px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease;
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+  }
+}
+
+// 表示中のテーマと逆のアイコンだけ見せる（押したらどうなるかを示す）
+[data-theme="dark"]  .theme-toggle__icon--light { display: inline-flex; }
+[data-theme="dark"]  .theme-toggle__icon--dark  { display: none; }
+[data-theme="light"] .theme-toggle__icon--light { display: none; }
+[data-theme="light"] .theme-toggle__icon--dark  { display: inline-flex; }
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 0 20px;
+  }
+
+  .nav-link {
+    padding: 6px 10px;
+  }
+}

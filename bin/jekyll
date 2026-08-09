@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# ホストに Ruby が無いときのフォールバック。
+# rbenv 環境が使えるならそちらが優先され、無ければ podman のコンテナで同じことをする。
+#
+#   bin/jekyll build
+#   bin/jekyll serve --host 0.0.0.0
+#
+# コンテナは --userns=keep-id で走らせるので、生成される _site の所有者はホストのユーザーのまま。
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# rbenv の shims は npm scripts の非対話シェルには載らない（.bashrc が読まれないため）。
+# PATH 頼みにすると、ホストに Ruby があるのに毎回コンテナへ落ちる。
+if [ -x "$HOME/.rbenv/bin/rbenv" ]; then
+  export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+fi
+
+if command -v bundle >/dev/null 2>&1 && bundle check >/dev/null 2>&1; then
+  exec bundle exec jekyll "$@"
+fi
+
+# slim ではなくフルの ruby イメージを使う。ネイティブ拡張（json, sass-embedded など）の
+# ビルドに gcc / make が要り、slim には入っていないため。
+IMAGE="${JEKYLL_IMAGE:-docker.io/library/ruby:3.3}"
+
+# 端末が無い場合（CI や npm scripts 経由）に -it を付けると podman が失敗する
+TTY_FLAGS=()
+[ -t 0 ] && TTY_FLAGS=(-it)
+
+# ポートを publish するのは serve のときだけ。build にも付けると、
+# 別の端末で serve を上げたまま npm test を回したときに
+# "port is already allocated" でビルドごと落ちる。
+PORT_FLAGS=()
+[ "${1:-}" = "serve" ] && PORT_FLAGS=(-p 4000:4000)
+
+exec podman run --rm "${TTY_FLAGS[@]}" "${PORT_FLAGS[@]}" \
+  --userns=keep-id \
+  -v "$ROOT:/app:Z" \
+  -w /app \
+  -e BUNDLE_PATH=/app/vendor/bundle \
+  -e BUNDLE_JOBS=4 \
+  "$IMAGE" \
+  bash -lc 'bundle check >/dev/null 2>&1 || bundle install --quiet; exec bundle exec jekyll "$@"' _ "$@"

@@ -1,0 +1,46 @@
+// DESIGN.md §5.0 — お知らせバナー。
+// 全ページ最上部、ヘッダーのさらに上に固定する。
+
+.site-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10002;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  background: var(--bg-surface);
+  border-bottom: 0.5px solid var(--border);
+  text-decoration: none;
+  color: var(--accent);
+  transition: background 150ms ease;
+
+  &:hover {
+    background: var(--bg-card-hover);
+  }
+}
+
+.site-banner__text {
+  font-family: Manrope, 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .site-banner {
+    padding: 0 12px;
+    gap: 6px;
+  }
+
+  .site-banner__text {
+    font-size: 12px;
+  }
+}
