@@ -20,6 +20,15 @@
     <a class="nav-link{% if is_active %} active{% endif %}"
        href="{{ path | relative_url }}"{% if is_active %} aria-current="page"{% endif %}>アーカイブ</a>
 
+    {%- assign support_path = "/support/" -%}
+    {%- if cur contains support_path -%}
+      {%- assign support_active = true -%}
+    {%- else -%}
+      {%- assign support_active = false -%}
+    {%- endif -%}
+    <a class="nav-link{% if support_active %} active{% endif %}"
+       href="{{ support_path | relative_url }}"{% if support_active %} aria-current="page"{% endif %}>サポート</a>
+
     <button class="theme-toggle" type="button" aria-label="テーマを切り替える">
       <span class="material-symbols-outlined icon-sm theme-toggle__icon--light" aria-hidden="true">light_mode</span>
       <span class="material-symbols-outlined icon-sm theme-toggle__icon--dark" aria-hidden="true">dark_mode</span>
